@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html>
+<html lang="en"></html>
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .layer { transition: all 0.3s ease; } /* 切换动画保留 */
+
+  .two-img-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 10px auto;   /* 加这行：让两张图整体居中 */
+    justify-content: center; /* 加这行：图片在容器内居中 */
+    margin-left: 20px;  /* 新增这行！和文字左边空白对齐，数值按你文字的边距调 */
+  }
+
+  .img-card {
+    width: 500px;
+    height: auto; /* 让卡片高度自适应内容 */
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column; /* 核心：改成垂直排列 */
+    align-items: center;    /* 让内容在水平方向居中 */
+    justify-content: center;
+    overflow: hidden;
+}
+
+  /* 写在<head>的<style>标签里 */
+  .text-left {
+    text-align: left !important; /* 强制靠左，取消居中 */
+    /* 可选：加个左边距，更美观 */
+    margin-left:100px;
+  }
+
+  .indent {/* 缩进函数 */
+    margin-left: 275px; /* 这个数值可以根据视觉效果微调 */
+  }
+
+  .indent-2 {/* 缩进函数(二级分支) */
+    margin-left: 200px; /* 这个数值可以根据视觉效果微调 */
+  }
+
+  .img-card {
+    width: 580px; /* 统一卡片宽度 */
+    height: 380px; /* 统一卡片高度，形成正方形 */
+    background: #f5f5f5; /* 加个浅灰背景，让图片更突出 */
+    /*border-radius: 12px; /* 圆角更美观 */
+    display: flex;
+    align-items: center; /* 让图片在卡片内垂直居中 */
+    justify-content: center; /* 让图片在卡片内水平居中 */
+    overflow: hidden; /* 防止图片溢出 */
+  }
+
+  /* 让图片在卡片内自适应，不拉伸变形 */
+  .img-card .content-img {
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* 保持图片比例，完整显示 */
+  }
+
+  /* 一级圆形按钮（横向排列） */
+.main-btn {
+  width: 150px;          
+  height: 150px;
+  border-radius: 50%;   
+  margin: 0 15px;       
+  background-color: #1E293B;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: inline-flex; 
+  /* 核心：让图标和文字垂直+水平居中 */
+  align-items: center;  
+  justify-content: center;
+  flex-direction: column; /* 图标在上，文字在下 */
+  transition: all 0.2s ease;
+}
+.main-btn i {
+  font-size: 24px;      /* 图标大小 */
+  margin-bottom: 5px;   /* 图标与文字间距 */
+}
+.main-btn span {
+  font-size: 12px;      /* 文字适配圆形大小 */
+}
+.main-btn:hover {
+  background-color: #1E2E3B;
+  transform: scale(1.05); /* hover放大效果 */
+}
+
+/* 主菜单容器（添加居中样式） */
+.main-menu {
+  margin: 100px auto; /* 上下间距40px，左右自动居中 */
+  text-align: center; /* 确保内部元素水平居中 */
+  padding: 20px 0;
+}
+
+
+    .main-btn:hover {
+      background-color: #FFF3E0;
+    }
+    .sub-menu {
+      display: none;
+      text-align: center;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f9fafb;
+      border-radius: 12px;
+      max-width: 800px;
+    }
+    .sub-option {
+      padding: 10px 20px;
+      margin: 6px;
+      font-size: 15px;
+      background-color: #1E2E3B;
+      color: #FFB703;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .sub-option:hover {
+      background-color: #1E2E3B;
+    }
+    .back-btn {
+      margin-top: 15px;
+      padding: 10px 30px;
+      background-color: #FFB703;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      background-color: #FFB703;
+    }
+    /* 全屏内容显示区样式（核心修改） */
+    
+    .content-display {
+      display: none;
+      position: fixed; /* 固定定位，全屏覆盖 */
+      top: 0;
+      left: 0;
+      width: 100vw; /* 宽度占满屏幕 */
+      height: 100vh; /* 高度占满屏幕 */
+      background-color: #ffffff;
+      z-index: 9999; /* 层级最高，覆盖其他内容 */
+      overflow-y: auto; /* 内容超出时可滚动 */
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
+    .content-container {
+      max-width: 1200px;
+      margin: 0 auto; /* 水平居中 */
+    }
+    .content-display h4 {
+      font-size: 28px;
+      color: #1e293b;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .content-text {
+      font-size: 18px;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    .content-img {
+    width: auto;        /* 删掉固定宽度250px，改成auto，按图片真实宽度来 */
+    max-width: 580px;   /* 加这行：限制图片最大宽度，避免太宽，数值可改 */
+    height: auto;       /* 保持auto，强制按比例缩放，不扁！ */
+    border-radius: 0;   /* 加这行：确保图片没有任何圆角（如果之前加过的话） */
+}
+    .close-content {
+      position: fixed; /* 固定在右上角 */
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%; /* 圆形按钮 */
+      background-color: #FFB703;
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 10000; /* 比内容区层级高，不被遮挡 */
+    }
+    .close-content:hover {
+      background-color: #1E2E3B;
+    }
+  </style>
+  <meta charset="utf-8">
+  <title>单片机自学网</title>
+  <style>
+ .triangle_右下 {
+  width: 0;
+  height: 0;
+  border-top: 200px solid transparent;
+  border-bottom: 0px solid transparent;
+  border-left: 100px solid #FFF3E0;
+
+  position: absolute; 
+  top: 565px;   
+  left: 1px;  
+}
+  </style>
+  
+  <!--三角形2-->
+  <style>
+ .triangle_中间扁的 {
+  width: 0;
+  height: 0;
+  border-left:200px solid transparent;
+  border-right:250px solid transparent;
+  border-bottom:50px solid #FFB703;
+
+  position: absolute; 
+  top: 715px;   
+  left: 450px;  
+}
+  </style>
+
+   <!--三角形3-->
+  <style>
+ .triangle_左边一点深蓝的 {
+  width: 0;
+  height: 0;
+  border-left:200px solid transparent;
+  border-right:20px solid transparent;
+  border-bottom:100px solid #1E293B;
+
+  position: absolute; 
+  top: 665px;   
+  left: 1000px;  
+}
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <!-- 标题部分（保持原有样式，放在最上方） -->
+  <h1 class="mt-20 text-6xl font-bold text-center text-slate-800 mb-8">欢迎来到单片机自学网站！</h1>
+  <h1 class="mt-10 text-2xl font-bold text-center text-amber-400 mb-8">——实用的基础单片机教程库</h1>
+
+  <!-- 菜单部分（移到标题下方） -->
+  <div class="main-menu" id="mainMenu">
+    <button class="main-btn" onclick="showSubMenu('subMenu1')">关于单片机</button>
+    <button class="main-btn" onclick="showSubMenu('subMenu2')">备战区赛</button>
+    <button class="main-btn" onclick="showSubMenu('subMenu3')">备战市赛</button>
+    <button class="main-btn" onclick="showSubMenu('subMenu4')">更多玩法</button>
+    <button class="main-btn" onclick="showSubMenu('subMenu5')">比赛必看</button>
+  </div>
+
+ 
+
+  <!-- 子菜单1（基础入门） -->
+  <div class="sub-menu" id="subMenu1">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4"></h3>
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">关于单片机</h3>
+    <button class="sub-option" onclick="showContent('content1-1')">元器件图鉴</button>
+    <button class="sub-option" onclick="showContent('content1-2')">认识软件</button>
+    <button class="sub-option" onclick="showContent('content1-3')">习惯养成</button>
+    <button class="back-btn" onclick="hideAllSubMenus()">返回主菜单</button>
+    
+    <!-- 内容显示区1-1：全屏样式 -->
+    <div class="content-display" id="content1-1">
+      <button class="close-content" onclick="hideContent('content1-1')">×</button>
+      <div class="content-container">
+        <h4>元器件图鉴</h4>
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\UNO主板.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">UNO主板</p>
+          </div>
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\面包板.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">面包板</p>
+          </div>
+
+        </div>
+
+        
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\导线.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">导线</p>
+          </div>
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\数据线.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">数据线</p>
+          </div>
+
+        </div>
+
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\数码管-侧面.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">数码管</p>
+          </div>
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\三极管.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">三极管</p>
+          </div>
+
+        </div>
+
+        
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\电位器-大.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">电位器-大</p>
+          </div>
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\电位器-小.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">电位器-小</p>
+          </div>
+
+        </div>
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\二极管（绿，黄，红）.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">二极管</p>
+          </div>
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\元器件图鉴\三极管.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">三极管 </p>
+          </div>
+
+        </div>
+
+
+        
+        </div>
+      </div>
+    
+
+    <!-- 内容显示区1-2：全屏样式 -->
+    <div class="content-display" id="content1-2">
+      <button class="close-content" onclick="hideContent('content1-2')">×</button>
+      <div class="content-container">
+        <h4>认识软件</h4>
+        <div class="content-text">
+          <!-- 此处填写文字内容 -->
+        </div>
+        <img src="替换为你的图片路径" alt="图片描述" class="content-img">
+      </div>
+    </div>
+
+    <!-- 内容显示区1-3：全屏样式 -->
+    <div class="content-display" id="content1-3">
+      <button class="close-content" onclick="hideContent('content1-3')">×</button>
+      <div class="content-container">
+        <h4>习惯养成</h4>
+        <div class="content-text">
+          <!-- 此处填写文字内容 -->
+        </div>
+        <img src="替换为你的图片路径" alt="图片描述" class="content-img">
+      </div>
+    </div>
+  </div>
+
+<!-- 子菜单2（硬件电路） -->
+  <div class="sub-menu" id="subMenu2">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">备战区赛</h3>
+    <button class="sub-option" onclick="showContent('content2-1')">LED二极管</button>
+    <button class="sub-option" onclick="showContent('content2-2')">三极管</button>
+    <button class="sub-option" onclick="showContent('content2-3')">数码管</button>
+    <button class="sub-option" onclick="showContent('content2-4')">下载资料</button>
+    <button class="sub-option" onclick="showContent('content2-5')">练习题&题解</button>
+    <button class="back-btn" onclick="hideAllSubMenus()">返回主菜单</button>
+    
+    <!-- 内容显示区2-1：全屏样式 -->
+    <div class="content-display" id="content2-1">
+      <button class="close-content" onclick="hideContent('content2-1')">×</button>
+      <div class="content-container">
+        <h4>LED二极管</h4>
+        <div class="content-text">
+          <p class="text-left">二极管的引脚由一根长引脚和一根短引脚构成（图1）。当我们收到新二极管时可以将其较长的一根引脚折弯以便区分（图2），二极管的长引脚（正极）在插线时接电，短引脚（负极）接GND。</p>
+        </div>
+        </div>
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\LED二极管\图1.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\LED二极管\图2.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+
+        </div>
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">1. 基础实践（如图3）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\LED二极管\图3.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图3</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">程序1（如图4）：仅由一个模块控制点亮二级管。</p>
+          <p class="text-left indent">程序2（如图5）：由两组模块组成，通过设置管脚输出的高低控制亮灭，用延时控制保持状态的时间。</p>
+        </div>
+
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\LED二极管\图4.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图4</p>
+          </div>
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\LED二极管\图5.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图5</p>
+          </div>
+
+          <div class="content-text">
+          <p class="text-left indent-2">2. 进阶应用</p>
+          <p class="text-left indent">插线（如图6）：三根黄色线分别连接GND和二极管短引脚（即负极），另外三根红色线分别连接主板1、2、3号管脚和三只二极管长引脚（即正极）。</p>
+          <p class="text-left indent">程序（如图7）：使用初始化模块保证有效的循环，初始化内嵌套的循环模块控制循环次数（详见0基础入门——程序模块讲解），控制模块通过分别控制三个二极管亮灭并在末尾添加延时以控制目前状态的持续时长。 以上四个模块为一组，综上所述，制作三组模块以控制亮灭即可，在循环结束后再用一组模块熄灭所有二极管。</p>
+          </div>
+        </div>
+
+        <div class="two-img-row">
+        <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\LED二极管\图6.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图6</p>
+          </div>
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\LED二极管\图7.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图7</p>
+          </div>
+          
+          <div class="content-text">
+            <p class="text-left">进阶应用部分请务必记牢并参考习题做到可随机应变，完成时间应在40秒到5分钟为宜，当然尽可能快速的完成。</p>
+          </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- 内容显示区2-2：全屏样式 -->
+    <div class="content-display" id="content2-2">
+      <button class="close-content" onclick="hideContent('content2-2')">×</button>
+      <div class="content-container">
+        <h4>三极管</h4>
+               <div class="content-text">
+          <p class="text-left">三极管的引脚由三根独立的金属引脚构成（图1），插线时遵循：中央引脚连接 5V，短引脚连接 1 号管脚，较长引脚连接 2 号管脚。</p>
+        </div>
+        </div>
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\三极管\图1.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+
+        </div>
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">1. 基础实践（如图2）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\三极管\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">插线：黄色线一端连接三极管短引脚，一端连接 1 号管脚；绿色线一端连接三极管中央引脚，一端连接 5V；橙色线一端连接三极管较长引脚，一端连接 2 号管脚。</p>
+          <p class="text-left indent">程序1（如图3）：由两个数字输出模块组成，通过分别设置 1 号和 2 号管脚的高低电平，实现三极管的基础导通与截止控制。</p>
+        </div>
+
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\三极管\图3.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图3</p>
+          </div>
+
+          <div class="content-text">
+          <p class="text-left indent-2">2. 进阶应用</p>
+          <p class="text-left indent">程序1（如图4）：使用初始化模块保证有效的循环，初始化内嵌套的循环模块控制循环次数，控制模块通过交替设置 1 号和 2 号管脚的高低电平，并在每次状态切换后添加延时以控制当前状态的持续时长。以上四个模块为一组，制作三组模块以实现不同的状态组合。</p>
+          <p class="text-left indent">程序2（如图5）：在程序 1 的基础上，添加了循环模块、初始化模块以及一组控制模块；其中初始化模块保证循环有效，循环模块控制循环次数，控制模块用于在循环结束后，同时将两个管脚设为高电平熄灭三极管，并添加延时完成收尾。</p>
+          </div>
+        </div>
+
+        <div class="two-img-row">
+        <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\三极管\图4.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图4</p>
+          </div>
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\三极管\图5.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图5</p>
+          </div>
+          
+          <div class="content-text">
+            <p class="text-left">进阶应用部分请务必记牢并做到可随机应变，完成时间应在 50 秒到 1 分20秒为宜，当然尽可能快速地完成。</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 内容显示区2-3：全屏样式 -->
+    <div class="content-display" id="content2-3">
+      <button class="close-content" onclick="hideContent('content2-3')">×</button>
+      <div class="content-container">
+        <h4>数码管</h4>
+               <div class="content-text">
+          <p class="text-left">数码管一共有 10 个引脚（图1），插线时遵循：5 号引脚连接 5V，1、3、4、6、7、8、9 号引脚分别对应连接 1、3、4、6、7、8、9 号管脚，其余引脚不连接管脚。</p>
+        </div>
+        </div>
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\数码管\图1.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+
+        </div>
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">1. 基础实践（如图2）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\数码管\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">插线：黄色线一端连接数码管 5 号引脚，一端连接 5V；多根绿色线分别将数码管 1、3、4、6、7、8、9 号引脚，对应连接到主板 1、3、4、6、7、8、9 号管脚，其余引脚不接线。</p>
+          <p class="text-left indent">程序1（如图3）：插线不变，可参考图2。由多组数字输出模块组成，通过分别设置 1、3、4、6、7、8、9 号管脚的高低电平组合，实现两位数码管显示固定数字。</p>
+        </div>
+
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\数码管\图3.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图3</p>
+          </div>
+
+          <div class="content-text">
+          <p class="text-left indent-2">2. 进阶应用</p>
+          <p class="text-left indent">程序1（如图4）：由多组控制模块组成，无初始化模块，通过设置不同管脚电平组合，实现两位数码管多组字符的重复显示，最后在循环外熄灭数码管。</p>
+          <p class="text-left indent">程序2（如图5）：在程序 1 的基础上添加了循环模块以及初始化模块；其中循环模块实现数字切换，初始化模块控制有效的循环。</p>
+          </div>
+        </div>
+
+        <div class="two-img-row">
+        <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\数码管\图4.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图4</p>
+          </div>
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战区赛\数码管\图5.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图5</p>
+          </div>
+          
+          <div class="content-text">
+            <p class="text-left">进阶应用部分请务必记牢并做到可随机应变，完成时间应在 50 秒到 1 分 30 秒为宜，当然尽可能快速地完成。</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 内容显示区2-4：移至subMenu2内部 -->
+    <div class="content-display" id="content2-4">
+      <button class="close-content" onclick="hideContent('content2-4')">×</button>
+      <div class="content-container">
+        <h4>下载资料</h4>
+        <div class="content-text">
+          <!-- 此处填写文字内容 -->
+        </div>
+        <img src="替换为你的图片路径" alt="图片描述" class="content-img">
+      </div>
+    </div>
+
+    <!-- 内容显示区2-5：移至subMenu2内部 -->
+    <div class="content-display" id="content2-5">
+      <button class="close-content" onclick="hideContent('content2-5')">×</button>
+      <div class="content-container">
+        <h4>练习题&题解</h4>
+        <div class="content-text">
+          <!-- 此处填写文字内容 -->
+        </div>
+        <img src="替换为你的图片路径" alt="图片描述" class="content-img">
+      </div>
+    </div>
+  </div>
+  <!-- 子菜单3（编程教程） -->
+  <div class="sub-menu" id="subMenu3">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">备战市赛</h3>
+    <button class="sub-option" onclick="showContent('content3-1')">数码管进阶</button>
+    <button class="sub-option" onclick="showContent('content3-2')">光敏电阻</button>
+    <button class="sub-option" onclick="showContent('content3-3')">按键控制LED亮灭一</button>
+    <button class="sub-option" onclick="showContent('content3-4')">按键控制LED亮灭二</button>
+    <button class="sub-option" onclick="showContent('content3-5')">电位器控制LED二极管亮度</button>
+    <button class="sub-option" onclick="showContent('content3-6')">电位器控制流水灯速度</button>
+    <button class="sub-option" onclick="showContent('content3-7')">全彩二极管</button>
+    <button class="sub-option" onclick="showContent('content3-8')">下载资料</button>
+    <button class="sub-option" onclick="showContent('content3-9')">练习题&答案</button>
+
+    <button class="back-btn" onclick="hideAllSubMenus()">返回主菜单</button>
+    
+    <!-- 内容显示区3-1：全屏样式 -->
+    <div class="content-display" id="content3-1">
+      <button class="close-content" onclick="hideContent('content3-1')">×</button>
+      <div class="content-container">
+        <h4>数码管进阶</h4>
+          <div class="content-text">
+          <p class="text-left">一、认识控制组合</p>
+          <p class="text-left">本次实验用到两位数码管，实现两位数字同步显示的效果。</p>
+        </div>
+      </div>
+
+      <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">1. 插线（如图 1）</p>
+        </div>
+      </div>
+        
+      <div class="two-img-row">
+        <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\两位数码管显示数字\图1.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+        </div>
+      </div>
+        
+          
+      <div class="content-text">
+        <p class="text-left indent">5、10 号引脚分别插在主板的 5、10 号管脚上，2 号引脚不插线，其余插线同一位数码管。</p>
+        <p class="text-left indent">2. 程序</p>
+        <p class="text-left indent">程序 1（如图 2）：由多组控制模块组成，无初始化模块，通过加入进制转换功能，实现两位数字同步显示。</p>
+      </div>
+
+
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\两位数码管显示数字\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+          <div class="content-text">
+          <p class="text-left indent">实操完成时间控制在 55 秒到 1 分 20 秒为宜，熟练后可加快速度，务必做到随机应变，遇到插线、程序问题能快速排查。</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 内容显示区3-2：全屏样式 -->
+    <div class="content-display" id="content3-2">
+      <button class="close-content" onclick="hideContent('content3-2')">×</button>
+      <div class="content-container">
+        <h4>光敏电阻</h4>
+               <div class="content-text">
+          <p class="text-left">光敏电阻由两根感应引脚构成，插线时遵循：一根引脚连接GND；另一根引脚连接电阻与 A0 号管脚，电阻另一端连接5v。</p>
+        </div>
+        </div>
+
+        
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">1. 基础实践（如图2）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\光敏电阻\图1.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">插线：红色线一端连接光敏电阻一根引脚，一端连接GND；线一端连接光敏电阻另一根引脚，一端连接电阻与 A0 号管脚，620欧姆电阻另一端连接5v。</p>
+          <p class="text-left indent">程序1（如图3）：由打印模块和模拟输入模块组成，通过读取 1 号管脚的信号变化，实现光敏电阻对光线强弱的基础检测。</p>
+        </div>
+
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\光敏电阻\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+
+          <div class="content-text">
+          <p class="text-left indent-2">2. 进阶应用</p>
+          <div>
+          <p class="text-left indent">插线：(如图3)在图1的基础上添加了一只二极管。</p>
+          <div class="two-img-row">
+        </div>
+
+
+        <div class="two-img-row">
+        <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\光敏电阻\图3.jpg" class="content-img" style="width: 300px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图3</p>
+          </div>
+
+        </div>
+
+          <p class="text-left indent">程序1（如图4）：由一组判断亮度逻辑语句和调试用的打印数据模块组成无初始化模块，通过读取光敏电阻信号，实现二极管亮灭状态的重复判断与显示。</p>
+        </div>
+
+        <div class="two-img-row">
+        <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\光敏电阻\图4.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图4</p>
+          </div>
+          
+          
+          <div class="content-text">
+            <p class="text-left">进阶应用部分请务必记牢并做到可随机应变，完成时间应在 1 分 05 秒到 3 分 10 秒为宜，当然尽可能快速地完成。</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 内容显示区3-3：全屏样式 -->
+    <div class="content-display" id="content3-3">
+      <button class="close-content" onclick="hideContent('content3-3')">×</button>
+      <div class="content-container">
+        <h4>按键控制LED亮灭一</h4>
+               <div class="content-text">
+          <p class="text-left">本次实验用到四爪按键和 LED 二极管（四爪按键的结构与基础操作，详见上一章按键专项教程），两者组合实现 “按下按键灯亮，松开按键灯灭” 的控制效果（如图1）。四爪按键共 4 根引脚，LED 二极管分长引脚（正极）和短引脚（负极），插线需严格对应管脚，确保信号正常传输。</p>
+        </div>
+        </div>
+
+        
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">一、实践应用</p>
+          <p class="text-left">1. 插线（如图1）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\四爪按键控制LED二极管亮灭\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">LED 二极管插线：红色线一端连接 LED 长引脚（正极），一端连接 2 号管脚；黑色线一端连接 LED 短引脚（负极），一端连接 GND。</p>
+          <p class="text-left indent">四爪按键插线：黄色线一端连接四爪按键其中一根引脚，一端连接 1 号管脚；绿色线一端连接四爪按键另一根对应引脚，一端连接 5V；蓝色线一端连接四爪按键第三个引脚，一端连接 GND；剩余一根引脚不接线（无需连接任何管脚）。</p>
+          <p class="text-left indent">注意：插线时确保颜色线与引脚、管脚对应，避免接反，否则 LED 无法正常亮灭。</p>
+          <p class="text-left indent">2. 程序（如图3）</p>
+          <p class="text-left indent">程序1：由多组控制模块组成，无初始化模块，通过持续检测按键信号，实现 LED 亮灭的重复响应，按下即亮、松开即灭，响应灵敏，无卡顿。</p>
+        </div>
+
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\四爪按键控制LED二极管亮灭\图3.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+
+          <div class="content-text">
+          <p class="text-left indent-2">实操注意事项：</p>
+          <p class="text-left indent">实操完成时间控制在 1 分 20 秒到 3 分 40 秒为宜，熟练后可加快速度，务必做到随机应变，遇到插线、程序问题能快速排查。</p>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 内容显示区3-4：全屏样式 -->
+    <div class="content-display" id="content3-4">
+      <button class="close-content" onclick="hideContent('content3-4')">×</button>
+      <div class="content-container">
+        <h4>按键控制LED亮灭二</h4>
+       <div class="content-text">
+          <p class="text-left">一、认识控制组合</p>
+          <p class="text-left">本次实验用到四爪按键和 LED 二极管，两者组合实现 “按一下按键灯亮，再按一下按键灯灭，无限循环” 的效果。</p>
+        </div>
+        </div>
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">插线（如图 1）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\四爪按键控制LED二极管亮灭2\图1.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">LED 二极管插线：红色线一端连接 LED 长引脚（正极），一端连接 2 号管脚；黑色线一端连接 LED 短引脚（负极），一端连接 GND。</p>
+          <p class="text-left indent">四爪按键插线：黄色线一端连接四爪按键其中一根引脚，一端连接 1 号管脚；绿色线一端连接四爪按键另一根对应引脚，一端连接 5V；蓝色线一端连接四爪按键第三个引脚，一端连接 GND；剩余一根引脚不接线。</p>
+          <p class="text-left indent">程序</p>
+          <p class="text-left indent">程序 1（如图 2）：由多组控制模块组成，无初始化模块，通过检测按键单次按下，实现 LED 亮灭状态切换：按一下亮、再按一下灭，可无限循环切换。</p>
+        </div>
+
+
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\四爪按键控制LED二极管亮灭2\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+          <div class="content-text">
+          <p class="text-left indent">实操完成时间控制在 1 分 20 秒到 3 分 30 秒为宜，熟练后可加快速度，务必做到随机应变，遇到插线、程序问题能快速排查。</p>
+          </div>
+        </div>
+        
+      </div>
+
+  <!-- 内容显示区3-5：全屏样式 -->
+    <div class="content-display" id="content3-5">
+      <button class="close-content" onclick="hideContent('content3-5')">×</button>
+      <div class="content-container">
+        <h4>电位器控制LED二极管亮度</h4>
+          <div class="content-text">
+          <p class="text-left">一、认识控制组合</p>
+          <p class="text-left">本次实验用到电位器和 LED 二极管，两者组合实现 “调节电位器旋钮，控制 LED 二极管亮度连续变化” 的效果。</p>
+        </div>
+        </div>
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">插线（如图 1）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\电位器控制二极管亮度\图1.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">LED 二极管插线：红色线一端连接 LED 长引脚（正极），一端连接 3 号管脚；黑色线一端连接 LED 短引脚（负极），一端连接 GND。</p>
+          <p class="text-left indent">电位器插线：黄色线一端连接电位器其中一根引脚，一端连接 GND；橙色线一端连接电位器另一根对应引脚，一端连接 5V；绿色线一端连接电位器中间引脚，一端连接 A0。</p>
+          <p class="text-left indent">程序</p>
+          <p class="text-left indent">程序 1（如图 2）：由多组控制模块组成，无初始化模块，通过检测电位器调节产生的信号变化，实现 LED 亮度连续调节：顺时针旋转旋钮，亮度变亮；逆时针旋转旋钮，亮度变暗。</p>
+        </div>
+
+
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\电位器控制二极管亮度\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+          <div class="content-text">
+          <p class="text-left indent">实操完成时间控制在 1 分 40 秒到 3 分 30 秒为宜，熟练后可加快速度，务必做到随机应变，遇到插线、程序问题能快速排查。</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 内容显示区3-6：全屏样式 -->
+    <div class="content-display" id="content3-6">
+      <button class="close-content" onclick="hideContent('content3-6')">×</button>
+      <div class="content-container">
+        <h4>电位器控制流水灯速度</h4>
+               <div class="content-text">
+          <p class="text-left">一、认识控制组合</p>
+          <p class="text-left">本次实验用到电位器和流水灯，两者组合实现 “调节电位器旋钮，控制流水灯闪烁流动速度连续变化” 的效果。</p>
+        </div>
+        </div>
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">插线（如图 1）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\电位器控制流水灯速度\图1.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">流水灯插线：橙色线一端连接流水灯正极引脚，一端连接 2 号管脚；绿色线一端连接流水灯负极引脚，一端连接 GND。</p>
+          <p class="text-left indent">电位器插线：黄色线一端连接电位器其中一根引脚，一端连接 GND；绿色线一端连接电位器另一根对应引脚，一端连接 5V；蓝色线一端连接电位器中间引脚，一端连接 A0 管脚。</p>
+          <p class="text-left indent">程序</p>
+          <p class="text-left indent">程序 1（如图 3）：由多组控制模块组成，无初始化模块，通过检测电位器调节产生的信号变化，控制流水灯速度：顺时针旋转旋钮，流水灯流动速度变快；逆时针旋转旋钮，流水灯流动速度变慢。</p>
+        </div>
+
+
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\电位器控制流水灯速度\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+          <div class="content-text">
+          <p class="text-left indent">实操完成时间控制在 1 分 30 秒到 3 分 30 秒为宜，熟练后可加快速度，务必做到随机应变，遇到插线、程序问题能快速排查。</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 内容显示区3-7：全屏样式 -->
+    <div class="content-display" id="content3-7">
+      <button class="close-content" onclick="hideContent('content3-7')">×</button>
+      <div class="content-container">
+        <h4>全彩二极管</h4>
+               <div class="content-text">
+          <p class="text-left">全彩二极管由四根独立引脚构成（图1），插线时遵循：负极引脚连接 GND，红色控制引脚连接 1 号管脚，绿色控制引脚连接 2 号管脚，蓝色控制引脚连接 3 号管脚。</p>
+        </div>
+        </div>
+
+        <div class="content-container">
+        <div class="content-text">
+          <p class="text-left">二、实践应用</p>
+          <p class="text-left">1. 基础实践（如图2）</p>
+        </div>
+        </div>
+        
+        <div class="two-img-row">
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\全彩二极管\图1.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图1</p>
+          </div>
+        </div>
+        
+          
+        <div class="content-text">
+          <p class="text-left indent">插线：黑色线一端连接全彩二极管负极引脚，一端连接 GND；红色线一端连接红色控制引脚，一端连接 1 号管脚；绿色线一端连接绿色控制引脚，一端连接 2 号管脚；蓝色线一端连接蓝色控制引脚，一端连接 3 号管脚。</p>
+          <p class="text-left indent">程序1（如图3）：由多组数字输出模块组成，通过分别设置 1、2、3 号管脚的高低电平，实现全彩二极管基础单色显示。</p>
+        </div>
+
+
+        <div class="two-img-row">
+
+          <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\全彩二极管\图2.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图2</p>
+          </div>
+
+          <div class="content-text">
+          <p class="text-left indent-2">2. 进阶应用</p>
+          <p class="text-left indent">程序1（如图4）：由多组控制模块组成，无初始化模块，通过切换不同管脚电平组合，实现全彩二极管多种颜色的重复切换显示。</p>
+          </div>
+        </div>
+
+        <div class="two-img-row">
+        <div class="img-card">
+          <img src="C:\Users\orchi\Desktop\网站资料\备战市赛\全彩二极管\图3.jpg" class="content-img" style="width: 500px; height: auto;">
+          <p style="font-size: 14px; color: #666; margin-top: 8px;">图3</p>
+          </div>
+          
+          <div class="content-text">
+            <p class="text-left">进阶应用部分请务必记牢并做到可随机应变，完成时间应在 50 秒到 1 分 40 秒为宜，当然尽可能快速地完成。</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 内容显示区3-8：全屏样式 -->
+    <div class="content-display" id="content3-8">
+      <button class="close-content" onclick="hideContent('content3-8')">×</button>
+      <div class="content-container">
+        <h4>下载资料</h4>
+        <div class="content-text">
+          <!-- 此处填写文字内容 -->
+        </div>
+        <img src="替换为你的图片路径" alt="图片描述" class="content-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- 内容显示区3-9：全屏样式 -->
+    <div class="content-display" id="content3-9">
+      <button class="close-content" onclick="hideContent('content3-9')">×</button>
+      <div class="content-container">
+        <h4>练习题&答案</h4>
+        <div class="content-text">
+          <!-- 此处填写文字内容 -->
+        </div>
+        <img src="替换为你的图片路径" alt="图片描述" class="content-img">
+      </div>
+    </div>
+    
+  </div>
+
+
+   <!-- 子菜单4（实战项目） -->
+  <div class="sub-menu" id="subMenu4">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">开发中……敬请期待~</h3>
+    <button class="back-btn" onclick="hideAllSubMenus()">返回主菜单</button>
+       <div class="content-display" id="content4-4">
+      <button class="close-content" onclick="hideContent('content4-4')">×</button>
+    </div>
+  </div>
+
+  <!-- 子菜单5（资料下载） -->
+  <div class="sub-menu" id="subMenu5">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">比赛必看</h3>
+
+      <button class="sub-option" onclick="showContent('content5-1')">元器件准备</button>
+      <button class="sub-option" onclick="showContent('content5-2')">熟悉比赛流程</button>
+      <button class="sub-option" onclick="showContent('content5-3')">常见问题&解决方案</button>
+          <button class="back-btn" onclick="hideAllSubMenus()">返回主菜单</button>
+    
+    <!-- 内容显示区5-1：全屏样式 -->
+    <div class="content-display" id="content5-1">
+      <button class="close-content" onclick="hideContent('content5-1')">×</button>
+      <div class="content-container">
+        <h4>元器件准备</h4>
+        <div class="content-text">
+          <!-- 此处填写文字内容 -->
+        </div>
+        <img src="替换为你的图片路径" alt="图片描述" class="content-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- 内容显示区5-2：全屏样式 -->
+  <div class="content-display" id="content5-2">
+      <button class="close-content" onclick="hideContent('content5-2')">×</button>
+      <div class="content-container">
+        <h4>熟悉比赛流程</h4>
+               <div class="content-text">
+          <p class="text-left">比赛注意事项</p>
+          <p class="text-left">如果马上就要比赛了，请阅读这篇文章，平时也可作特备用。</p>
+          <p class="text-left">1. 提前调试好设备，准备好能用的元器件，收拾好比赛要用的包。包里要有：</p>
+          <p class="text-left indent">一支中性笔（黑笔）、尺子、调试好的器材盒、2张A4纸、电脑、鼠标。</p>
+          <p class="text-left">2. 调试设备时把最好用的元器件留下，其它元器件只作保底，可多带以下准备：</p>
+          <p class="text-left indent">初赛：导线若干（20根足够）、数码管（两位）一天、单色LED每种颜色各两支、三极管（红、绿、橙）两支，面包板，Uno主板。</p>
+          <p class="text-left indent">复赛：导线若干（20根足够）、数码管（两位）一天、单色LED每种颜色2~3支、三极管（红、绿、橙）两支，全彩LED两支，按键2~3个，电位器一个、热敏电阻两支，面包板，Uno主板。</p>
+          <p class="text-left">3. 比赛最重要的是心态，请在赛场上务必冷静。</p>
+          <p class="text-left">接下来，我们来过一遍比赛流程</p>
+          <p class="text-left">1. 早上，和家长来到考场，建议早30分钟到。</p>
+          <p class="text-left">2. 找一起参赛的同学与带队老师。</p>
+          <p class="text-left">3. 到时间，进场。老师一般不能进场，和同校的同学一起进场。</p>
+          <p class="text-left">4. 到赛场，Tips：裁判你可能认识，但装不认识（避免误会）找座位坐。</p>
+          <p class="text-left">5. 根据裁 提示填写信息（提前准备好主板，打开Mixly软 件，取出元器件）。</p>
+          <p class="text-left">6. 进行两场比赛。</p>
+          <p class="text-left">7. 和同校同学一起出考场，找领队老师及家长。</p>
+          <p class="text-left">最后是一些常见问题的解决方案，比较通用</p>
+          <p class="text-left">1. 检查接线</p>
+          <p class="text-left">2. 检查程序</p>
+          <p class="text-left">3. 上传</p>
+          <p class="text-left">4. 换数据线重连</p>
+          <p class="text-left">5. 换元器件</p>
+          <p class="text-left indent">如果没有可以找裁判要</p>
+          <p class="text-left">6. 换导线</p>
+          <p class="text-left">预祝大家比赛顺利！</p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 内容显示区5-3：全屏样式 -->
+  <div class="content-display" id="content5-3">
+      <button class="close-content" onclick="hideContent('content5-3')">×</button>
+      <div class="content-container">
+        <h4>常见问题&题解</h4>
+        <div class="content-text">
+          <!-- 此处填写文字内容 -->
+        </div>
+        <img src="替换为你的图片路径" alt="图片描述" class="content-img">
+      </div>
+    </div>
+  </div>
+
+
+    
+    
+
+
+  </div>
+
+  <!-- 交互逻辑（完整修复） -->
+  <script>
+    // 显示目标子菜单
+    function showSubMenu(targetId) {
+      hideAllSubMenus();
+      document.getElementById(targetId).style.display = 'block';
+      document.getElementById('mainMenu').style.display = 'none';
+    }
+
+    // 返回主菜单（隐藏所有子菜单和内容区）
+    function hideAllSubMenus() {
+      const allSubMenus = document.querySelectorAll('.sub-menu');
+      allSubMenus.forEach(menu => menu.style.display = 'none');
+      
+      const allContents = document.querySelectorAll('.content-display');
+      allContents.forEach(content => content.style.display = 'none');
+      
+      document.getElementById('mainMenu').style.display = 'block';
+    }
+
+    // 显示对应内容区（二级按钮点击触发）
+    function showContent(contentId) {
+      // 先隐藏其他所有内容区，避免同时显示多个
+      const allContents = document.querySelectorAll('.content-display');
+      allContents.forEach(content => content.style.display = 'none');
+      // 显示当前点击对应的内容区
+      document.getElementById(contentId).style.display = 'block';
+    }
+
+    // 关闭当前内容区
+    function hideContent(contentId) {
+      document.getElementById(contentId).style.display = 'none';
+    }
+  </script>
+
+  <!-- 三角形装饰（保持原有） -->
+  <div class="triangle_右下"></div>
+  <div class="triangle_中间扁的"></div>
+  <div class="triangle_左边一点深蓝的"></div>
+</body>
+</html>
